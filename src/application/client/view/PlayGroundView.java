@@ -9,8 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import application.client.controller.Command;
-import application.client.controller.LoginCommand;
+import application.client.controller.PlayerJoinControllerInterface;
 
 public class PlayGroundView {
 	JButton loginButton;
@@ -19,9 +18,11 @@ public class PlayGroundView {
 	PlayGroundView playGroundView;
 	JScrollPane scrollPane;
 	JTextField loginField;
+	PlayerJoinControllerInterface playerJoinControllerInterface;
 	
-	public PlayGroundView(){
+	public PlayGroundView(PlayerJoinControllerInterface playerJoinControllerInterface){
 		super();
+		this.playerJoinControllerInterface = playerJoinControllerInterface;
 		playGroundView = this;
 		initializeGUI();
 	}
@@ -40,8 +41,7 @@ public class PlayGroundView {
         loginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Command loginCommand = new LoginCommand(playGroundView);
-				loginCommand.doCommand();
+				playerJoinControllerInterface.joinGame(loginField.getText());
 			}
 		});  
         
@@ -61,7 +61,7 @@ public class PlayGroundView {
         
     }
 	
-	public void updatePlayGroundView(){
+	public void update(){
 		scrollPane.removeAll();
 		scrollPane.add(gameLog);
 		playGroundFrame.add(loginButton);
@@ -69,16 +69,20 @@ public class PlayGroundView {
 		playGroundFrame.setVisible(true);
 	}
 
-	public JButton getAnmeldenButton() {
-		return loginButton;
-	}
-
 	public JTextArea getGameLog() {
 		return gameLog;
 	}
-	
+
+	public void setGameLog(JTextArea gameLog) {
+		this.gameLog = gameLog;
+	}
+
 	public JTextField getLoginField() {
 		return loginField;
+	}
+
+	public void setLoginField(JTextField loginField) {
+		this.loginField = loginField;
 	}
 
 
