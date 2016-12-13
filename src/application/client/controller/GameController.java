@@ -10,7 +10,7 @@ public class GameController implements MessageReceiverInterface, GameControllerI
 	private ServerProxy serverProxy = new ServerProxyStub(messageHandler);
 
 	public GameController() {
-		
+		((MessageHandler) messageHandler).register(this);
 	}
 	
 	@Override
