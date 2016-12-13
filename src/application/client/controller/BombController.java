@@ -2,6 +2,7 @@ package application.client.controller;
 
 import network.Message;
 import network.client.ServerProxy;
+import application.network.PlayerJoinedMessage;
 import application.network.ServerProxyStub;
 
 public class BombController implements MessageReceiverInterface, BombControllerInterface{
@@ -33,6 +34,9 @@ public class BombController implements MessageReceiverInterface, BombControllerI
 	@Override
 	public void handleMessage(Message msg) {
 		// TODO Auto-generated method stub
+		if (msg instanceof BombDroppedMessage){
+			BombDroppedMessage BombDroppedMsg = (BombDroppedMessage) msg;
+		}
 		
 	}
 }
