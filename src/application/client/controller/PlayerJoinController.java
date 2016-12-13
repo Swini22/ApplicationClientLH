@@ -21,12 +21,14 @@ public class PlayerJoinController implements MessageReceiverInterface, PlayerJoi
 	
 	@Override
 	public void joinGame(String playerName) {
+		//send
 		Message joinGameMessage = new JoinGameMessage(playerName);
 		serverProxy.send(joinGameMessage);
 	}
 	
 	@Override
 	public void playerJoined(String otherPlayerName, int positionX, int positionY) {
+		//handleMessage
 		playGroundView.getGameLog().setText(playGroundView.getGameLog().getText()+ "User "+ otherPlayerName  +" has joined Game \n");
 		playGroundView.update();
 	}
