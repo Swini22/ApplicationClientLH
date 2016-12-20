@@ -33,7 +33,6 @@ public class GameController implements MessageReceiverInterface, GameControllerI
 
 	@Override
 	public void handleMessage(Message msg) {
-		// TODO Auto-generated method stub
 		
 	}
 }

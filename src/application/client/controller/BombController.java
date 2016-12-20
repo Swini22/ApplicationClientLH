@@ -1,7 +1,7 @@
 package application.client.controller;
 
 import application.network.BombDroppedMessage;
-import application.network.PlayerJoinedMessage;
+import application.network.DropBombMessage;
 import application.network.ServerProxyStub;
 import network.Message;
 import network.client.ServerProxy;
@@ -16,14 +16,15 @@ public class BombController implements MessageReceiverInterface, BombControllerI
 	
 	@Override
 	public void dropBomb(String playerName, int positionX, int positionY) {
-		// TODO send
-
+		//send
+		Message dropBombMessage = new DropBombMessage(playerName, positionX, positionY);
+		serverProxy.send(dropBombMessage);
 	}
 	
 	@Override
 	public void bombDropped(int id, int positionX, int positionY) {
-		// TODO handleMessage
-
+		//handleMessage
+		//TODO bombe soll auf dem feld positionX, positionY angezeigt werden (id versteckt)
 	}
 	
 	@Override
@@ -34,9 +35,9 @@ public class BombController implements MessageReceiverInterface, BombControllerI
 
 	@Override
 	public void handleMessage(Message msg) {
-		// TODO Auto-generated method stub
 		if (msg instanceof BombDroppedMessage){
 			BombDroppedMessage BombDroppedMsg = (BombDroppedMessage) msg;
+			bombDropped(BombDroppedMsg.getId(), BombDroppedMsg.getPositionX(), BombDroppedMsg.getPositionY());
 		}
 		
 	}
