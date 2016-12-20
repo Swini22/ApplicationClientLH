@@ -1,9 +1,10 @@
 package application.client.controller;
 
-import network.Message;
-import network.client.ServerProxy;
+import application.network.BombDroppedMessage;
 import application.network.PlayerJoinedMessage;
 import application.network.ServerProxyStub;
+import network.Message;
+import network.client.ServerProxy;
 
 public class BombController implements MessageReceiverInterface, BombControllerInterface{
 	private MessageHandler messageHandler;
