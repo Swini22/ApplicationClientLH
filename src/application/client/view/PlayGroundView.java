@@ -52,28 +52,9 @@ public class PlayGroundView {
 		playGroundFrame.setResizable(false);
 		playGroundFrame.setLayout(null);
         
-        
-        loginButton = new JButton("Anmelden");
-        loginButton.setBounds(450, 50, 200, 40);//x axis, y axis, width, height  
-        loginButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				playerJoinControllerInterface.joinGame(loginField.getText());
-			}
-		});  
-        
-        loginField = new JTextField();
-        loginField.setBounds(150, 50, 200, 40);//x axis, y axis, width, height  
-        
-        gameLog = new JTextArea();
-        gameLog.setEditable(false);
-        scrollPane = new JScrollPane(gameLog); 
-        scrollPane.setBounds(0, 620, 800, 180);
-        
-        this.labyrinthPanel = new LabyrinthPanel(this, bombControllerinterface);
-        
-        labyrinthScrollPane = new JScrollPane(labyrinthPanel); 
-        labyrinthScrollPane.setBounds(150, 100, 500, 500);
+        createLoginArea();
+        createGameLog();
+        createLabyrinthPanel();
         
         playGroundFrame.add(labyrinthScrollPane);
         playGroundFrame.add(loginField);
@@ -81,9 +62,36 @@ public class PlayGroundView {
         playGroundFrame.add(scrollPane);
 
         playGroundFrame.setVisible(true);
-        
     }
+
+	private void createLabyrinthPanel() {
+		labyrinthPanel = new LabyrinthPanel(this, bombControllerinterface);
+        
+        labyrinthScrollPane = new JScrollPane(labyrinthPanel); 
+        labyrinthScrollPane.setBounds(150, 100, 500, 500);
+	}
+
+	private void createLoginArea() {
+		loginButton = new JButton("Anmelden");
+		loginButton.setBounds(450, 50, 200, 40);//x axis, y axis, width, height  
+		loginButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				playerJoinControllerInterface.joinGame(loginField.getText());
+			}
+		});  
+		
+		loginField = new JTextField();
+		loginField.setBounds(150, 50, 200, 40);//x axis, y axis, width, height  
+	}
 	
+	private void createGameLog() {
+		gameLog = new JTextArea();
+        gameLog.setEditable(false);
+        scrollPane = new JScrollPane(gameLog); 
+        scrollPane.setBounds(0, 620, 800, 180);
+	}
+
 	public void update(){
 		scrollPane.removeAll();
 		scrollPane.add(gameLog);
@@ -97,4 +105,9 @@ public class PlayGroundView {
 		loginField.setEditable(false);
 		loginButton.setEnabled(false);
 	}
+
+	public JTextField getLoginField() {
+		return loginField;
+	}
 }
+
