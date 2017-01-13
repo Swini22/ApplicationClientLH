@@ -1,15 +1,19 @@
 package application.client.controller;
 
+import application.client.view.PlayGroundView;
 import application.network.BombDroppedMessage;
 import application.network.BombExplodedMessage;
 import application.network.DropBombMessage;
 import application.network.ServerProxyStub;
 import network.Message;
+import network.client.ClientApplicationInterface;
 import network.client.ServerProxy;
 
 public class BombController implements MessageReceiverInterface, BombControllerInterface{
-	private MessageHandler messageHandler;
+	
+	private ClientApplicationInterface messageHandler = new MessageHandler();
 	private ServerProxy serverProxy = new ServerProxyStub(messageHandler);
+	private PlayGroundView playGroundView;
 
 	public BombController() {
 		((MessageHandler) messageHandler).register(this);
@@ -24,8 +28,8 @@ public class BombController implements MessageReceiverInterface, BombControllerI
 	
 	@Override
 	public void bombDropped(int id, int positionX, int positionY) {
-		//handleMessage
-		//TODO bombe soll auf dem feld positionX, positionY angezeigt werden (id versteckt)
+		playGroundView.getLabyrinthPanel().setBomb(id, positionX, positionY);
+		playGroundView.update();
 	}
 	
 	@Override
@@ -45,6 +49,11 @@ public class BombController implements MessageReceiverInterface, BombControllerI
 			BombExplodedMessage bombExplodeMsg = (BombExplodedMessage) msg;
 			bombExploded(bombExplodeMsg.getId());
 		}
+	}
+
+	@Override
+	public void setPlayGroundView(PlayGroundView playGroundView) {
+		this.playGroundView = playGroundView;
 	}
 }
  

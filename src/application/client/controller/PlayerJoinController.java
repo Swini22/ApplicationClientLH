@@ -4,6 +4,7 @@ import application.client.view.PlayGroundView;
 import application.network.JoinGameMessage;
 import application.network.PlayerJoinedMessage;
 import application.network.ServerProxyStub;
+import application.network.StartGameMessage;
 import network.Message;
 import network.client.ClientApplicationInterface;
 import network.client.ServerProxy;
@@ -12,11 +13,13 @@ public class PlayerJoinController implements MessageReceiverInterface, PlayerJoi
 	
 	private ClientApplicationInterface messageHandler = new MessageHandler();
 	private ServerProxy serverProxy = new ServerProxyStub(messageHandler);
-	PlayGroundView playGroundView;
+	private PlayGroundView playGroundView;
 
 	public PlayerJoinController() {
 		((MessageHandler) messageHandler).register(this);
-		playGroundView = new PlayGroundView(this);
+		BombControllerInterface bombController = new BombController();
+		playGroundView = new PlayGroundView(this, bombController);
+		bombController.setPlayGroundView(playGroundView);
 	}
 	
 	@Override
@@ -31,18 +34,23 @@ public class PlayerJoinController implements MessageReceiverInterface, PlayerJoi
 		//handleMessage
 		playGroundView.getGameLog().setText(playGroundView.getGameLog().getText()+ "User "+ otherPlayerName  +" has joined Game \n");
 		playGroundView.update();
+		playGroundView.getLoginField().setEditable(false);
+		playGroundView.getLoginButton().setEnabled(false);
+
+		Message startGameMessage = new StartGameMessage();
+		serverProxy.send(startGameMessage);
 	}
 	
 	@Override
-	public void startGame(String[][] labyrinth) { 
-		// TODO handleMessage
-
+	public void startGame(String[][] labyrinth) {
+		//handleMessage
+		playGroundView.getLabyrinthPanel().update(labyrinth);
+		playGroundView.update();
 	}
 	
 	@Override
 	public void error(String errorMsg) { 
 		// TODO handleMessage
-
 	}
 
 	@Override
@@ -51,6 +59,9 @@ public class PlayerJoinController implements MessageReceiverInterface, PlayerJoi
 			PlayerJoinedMessage playerJoinedMsg = (PlayerJoinedMessage) msg;
 			playerJoined(playerJoinedMsg.getPlayerName(), playerJoinedMsg.getPositionX(), playerJoinedMsg.getPositionY());
 		}
-		
+		if (msg instanceof StartGameMessage){
+			StartGameMessage startGameMessage = (StartGameMessage) msg;
+			startGame(startGameMessage.getLabyrinthData());
+		}
 	}
 }
