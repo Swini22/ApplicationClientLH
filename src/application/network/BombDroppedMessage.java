@@ -8,7 +8,6 @@ public class BombDroppedMessage implements Message {
 	private int positionX;
 	private int positionY;
 	
-	
 	public BombDroppedMessage(int id, int positionX, int positionY) {
 		super();
 		this.id = id;

@@ -1,5 +1,6 @@
 package application.client.controller;
 
+import application.client.model.Bomb;
 import application.client.view.PlayGroundView;
 import application.network.BombDroppedMessage;
 import application.network.BombExplodedMessage;
@@ -28,15 +29,14 @@ public class BombController implements MessageReceiverInterface, BombControllerI
 	
 	@Override
 	public void bombDropped(int id, int positionX, int positionY) {
-		playGroundView.getLabyrinthPanel().setBomb(id, positionX, positionY);
+		Bomb bomb = new Bomb(id, positionX, positionY);
+		playGroundView.getLabyrinthPanel().setBomb(bomb);
 		playGroundView.update();
 	}
 	
 	@Override
 	public void bombExploded(int id) {
 		// TODO handleMessage
-		//
-
 	}
 
 	@Override

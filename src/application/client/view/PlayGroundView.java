@@ -109,5 +109,14 @@ public class PlayGroundView {
 	public JTextField getLoginField() {
 		return loginField;
 	}
+
+	public JTextArea getGameLog() {
+		return gameLog;
+	}
+
+	public void setGameLog(JTextArea gameLog) {
+		this.gameLog = gameLog;
+	}
+	
 }
 

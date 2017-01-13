@@ -11,19 +11,20 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import application.client.controller.BombControllerInterface;
+import application.client.model.Bomb;
 
 @SuppressWarnings("serial")
 public class LabyrinthPanel extends JPanel{
 	
 	private LabyrinthPanel labyrinthPanel;
-	private BombControllerInterface bombControllerinterface;
+	private BombControllerInterface bombController;
 	private PlayGroundView playGroundView;
 	private String[][] labyrinthData;
 	
-	public LabyrinthPanel(PlayGroundView playGroundView, BombControllerInterface bombControllerinterface){
+	public LabyrinthPanel(PlayGroundView playGroundView, BombControllerInterface bombController){
 		super();
 		this.playGroundView = playGroundView;
-		this.bombControllerinterface = bombControllerinterface;
+		this.bombController = bombController;
 		labyrinthPanel = this;
 		initializeGUI();
 	}
@@ -52,7 +53,7 @@ public class LabyrinthPanel extends JPanel{
              @Override
              public void keyPressed(KeyEvent e) {
             	 if(e.getKeyCode()==KeyEvent.VK_SPACE){
-            		 bombControllerinterface.dropBomb(playGroundView.getLoginField().getText(), 0, 0);
+            		 bombController.dropBomb(playGroundView.getLoginField().getText(), 0, 0);
                 }
 
              }
@@ -98,8 +99,9 @@ public class LabyrinthPanel extends JPanel{
 		labyrinthPanel.setVisible(true);
 	}
 
-	public void setBomb(int id, int positionX, int positionY) {
-		labyrinthData[positionX][positionY] = "BO";
+	public void setBomb(Bomb bomb) {
+		labyrinthData[bomb.getPositionX()][bomb.getPositionY()] = "BO";
 		update(labyrinthData);
+		playGroundView.getGameLog().setText(playGroundView.getGameLog().getText()+ "Bomb " +bomb.getId()+" Dropt! \n");
 	}
 }
