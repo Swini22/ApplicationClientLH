@@ -31,9 +31,9 @@ public class PlayerJoinController implements MessageReceiverInterface, PlayerJoi
 	}
 	
 	@Override
-	public void playerJoined(String otherPlayerName, int positionX, int positionY) {
+	public void playerJoined(String playerName, int posX, int posY) {
 		//handleMessage
-		Player player = new Player(otherPlayerName, positionX, positionY);
+		Player player = new Player(playerName, posX, posY);
 		playGroundView.setNewPlayer(player);
 
 		Message startGameMessage = new StartGameMessage();
