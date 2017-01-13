@@ -1,5 +1,6 @@
 package application.client.controller;
 
+import application.client.model.Player;
 import application.client.view.PlayGroundView;
 import application.network.JoinGameMessage;
 import application.network.PlayerJoinedMessage;
@@ -32,10 +33,8 @@ public class PlayerJoinController implements MessageReceiverInterface, PlayerJoi
 	@Override
 	public void playerJoined(String otherPlayerName, int positionX, int positionY) {
 		//handleMessage
-		playGroundView.getGameLog().setText(playGroundView.getGameLog().getText()+ "User "+ otherPlayerName  +" has joined Game \n");
-		playGroundView.update();
-		playGroundView.getLoginField().setEditable(false);
-		playGroundView.getLoginButton().setEnabled(false);
+		Player player = new Player(otherPlayerName, positionX, positionY);
+		playGroundView.setNewPlayer(player);
 
 		Message startGameMessage = new StartGameMessage();
 		serverProxy.send(startGameMessage);

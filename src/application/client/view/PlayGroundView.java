@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import application.client.controller.BombControllerInterface;
 import application.client.controller.PlayerJoinControllerInterface;
+import application.client.model.Player;
 
 public class PlayGroundView {
 	private JButton loginButton;
@@ -90,19 +91,10 @@ public class PlayGroundView {
 		playGroundFrame.setVisible(true);
 	}
 
-	public JTextArea getGameLog() {
-		return gameLog;
-	}
-
-	public void setGameLog(JTextArea gameLog) {
-		this.gameLog = gameLog;
-	}
-
-	public JTextField getLoginField() {
-		return loginField;
-	}
-
-	public void setLoginField(JTextField loginField) {
-		this.loginField = loginField;
+	public void setNewPlayer(Player player) {
+		gameLog.setText(gameLog.getText()+ "User "+ player.getPlayerName()+" has joined Game \n");
+		update();
+		loginField.setEditable(false);
+		loginButton.setEnabled(false);
 	}
 }
