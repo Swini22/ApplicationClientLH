@@ -1,7 +1,5 @@
 package application.client.controller;
 
-import network.Message;
-
 public interface GameControllerInterface {
 
     public void playerHit(String playerName);

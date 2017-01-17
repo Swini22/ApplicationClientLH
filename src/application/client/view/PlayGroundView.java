@@ -1,94 +1,122 @@
 package application.client.view;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import application.client.controller.BombControllerInterface;
 import application.client.controller.PlayerJoinControllerInterface;
+import application.client.model.Player;
 
 public class PlayGroundView {
-    JButton loginButton;
-    JFrame playGroundFrame;
-    JTextArea gameLog;
-    PlayGroundView playGroundView;
-    JScrollPane scrollPane;
-    JTextField loginField;
-    JPanel labyrinthView;
-    JPanel labyrinthPanel;
-    GridLayout gridLayout;
-    PlayerJoinControllerInterface playerJoinControllerInterface;
+	private JButton loginButton;
+	private JFrame playGroundFrame;
+	private JTextArea gameLog;
+	private JScrollPane scrollPane;
+	private JScrollPane labyrinthScrollPane;
+	private JTextField loginField;
+	private LabyrinthPanel labyrinthPanel;
+	private PlayerJoinControllerInterface playerJoinControllerInterface;
+	private BombControllerInterface bombControllerinterface;
+	
+	public JButton getLoginButton() {
+		return loginButton;
+	}
 
-    public PlayGroundView(PlayerJoinControllerInterface playerJoinControllerInterface) {
-        super();
-        this.playerJoinControllerInterface = playerJoinControllerInterface;
-        playGroundView = this;
-        initializeGUI();
-    }
+	public LabyrinthPanel getLabyrinthPanel() {
+		return labyrinthPanel;
+	}
 
-    private void initializeGUI() {
-        playGroundFrame = new JFrame();
-        playGroundFrame.setTitle("Bomberman");
-        playGroundFrame.setSize(800, 800);
-        playGroundFrame.setLocationRelativeTo(null);
-        playGroundFrame.setDefaultCloseOperation(playGroundFrame.EXIT_ON_CLOSE);
-        playGroundFrame.setLayout(null);
-        playGroundFrame.setResizable(false);
+	public void setLabyrinthPanel(LabyrinthPanel labyrinthPanel) {
+		this.labyrinthPanel = labyrinthPanel;
+	}
 
-
-        loginButton = new JButton("Anmelden");
-        loginButton.setBounds(10, 10, 150, 30);//x axis, y axis, width, height
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                playerJoinControllerInterface.joinGame(loginField.getText());
-            }
-        });
-
-        loginField = new JTextField();
-        loginField.setBounds(175, 10, 150, 30);//x axis, y axis, width, height
-
-        gameLog = new JTextArea();
-        gameLog.setEditable(false);
-        scrollPane = new JScrollPane(gameLog);
-        scrollPane.setBounds(0, 600, 800, 200);
-
-        labyrinthView = new JPanel();
-        labyrinthView.setBounds(10, 10, 10,10);
-        labyrinthView.add(labyrinthPanel = new LabyrinthPanel());
-
+	public PlayGroundView(PlayerJoinControllerInterface playerJoinControllerInterface, BombControllerInterface bombControllerinterface){
+		super();
+		this.playerJoinControllerInterface = playerJoinControllerInterface;
+		this.bombControllerinterface = bombControllerinterface;
+		initializeGUI();
+	}
+	
+	private void initializeGUI() {
+		playGroundFrame = new JFrame();
+		playGroundFrame.setTitle("Bomberman");
+		playGroundFrame.setSize(800, 800);
+		playGroundFrame.setLocationRelativeTo(null);
+		playGroundFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		playGroundFrame.setResizable(false);
+		playGroundFrame.setLayout(null);
+        
+        createLoginArea();
+        createGameLog();
+        createLabyrinthPanel();
+        
+        playGroundFrame.add(labyrinthScrollPane);
         playGroundFrame.add(loginField);
         playGroundFrame.add(loginButton);
         playGroundFrame.add(scrollPane);
-        playGroundFrame.add(labyrinthView);
 
         playGroundFrame.setVisible(true);
-
     }
 
-    public void update() {
-        scrollPane.removeAll();
-        scrollPane.add(gameLog);
-        playGroundFrame.add(loginButton);
-        playGroundFrame.add(scrollPane);
-        playGroundFrame.setVisible(true);
-    }
+	private void createLabyrinthPanel() {
+		labyrinthPanel = new LabyrinthPanel(this, bombControllerinterface);
+        
+        labyrinthScrollPane = new JScrollPane(labyrinthPanel); 
+        labyrinthScrollPane.setBounds(150, 100, 500, 500);
+	}
 
-    public JTextArea getGameLog() {
-        return gameLog;
-    }
+	private void createLoginArea() {
+		loginButton = new JButton("Anmelden");
+		loginButton.setBounds(450, 50, 200, 40);//x axis, y axis, width, height  
+		loginButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				playerJoinControllerInterface.joinGame(loginField.getText());
+			}
+		});  
+		
+		loginField = new JTextField();
+		loginField.setBounds(150, 50, 200, 40);//x axis, y axis, width, height  
+	}
+	
+	private void createGameLog() {
+		gameLog = new JTextArea();
+        gameLog.setEditable(false);
+        scrollPane = new JScrollPane(gameLog); 
+        scrollPane.setBounds(0, 620, 800, 180);
+	}
 
-    public void setGameLog(JTextArea gameLog) {
-        this.gameLog = gameLog;
-    }
+	public void update(){
+		scrollPane.removeAll();
+		scrollPane.add(gameLog);
+		playGroundFrame.add(scrollPane);
+		playGroundFrame.setVisible(true);
+	}
 
-    public JTextField getLoginField() {
-        return loginField;
-    }
+	public void setNewPlayer(Player player) {
+		gameLog.setText(gameLog.getText()+ "User "+ player.getPlayerName()+" has joined Game \n");
+		update();
+		loginField.setEditable(false);
+		loginButton.setEnabled(false);
+	}
 
-    public void setLoginField(JTextField loginField) {
-        this.loginField = loginField;
-    }
+	public JTextField getLoginField() {
+		return loginField;
+	}
 
+	public JTextArea getGameLog() {
+		return gameLog;
+	}
 
+	public void setGameLog(JTextArea gameLog) {
+		this.gameLog = gameLog;
+	}
+	
 }
+

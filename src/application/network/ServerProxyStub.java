@@ -19,9 +19,13 @@ public class ServerProxyStub extends ServerProxy {
 			PlayerJoinedMessage playerJoinMessage = new PlayerJoinedMessage(((JoinGameMessage) message).getPlayerName(), 0, 0);
 			clientApplication.handleMessage(playerJoinMessage);
 		}
-		if (message instanceof BombDroppedMessage){
-			
+		if (message instanceof DropBombMessage){
+			BombDroppedMessage bombDroppedMessage = new BombDroppedMessage(1,0,1);
+			clientApplication.handleMessage(bombDroppedMessage);
+		}
+		if (message instanceof StartGameMessage){
+			StartGameMessage startGameMessage = new StartGameMessage();
+			clientApplication.handleMessage(startGameMessage);
 		}
 	}
-
 }

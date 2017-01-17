@@ -27,7 +27,6 @@ public class PlayerMoveController implements MessageReceiverInterface, PlayerMov
 
 	@Override
 	public void handleMessage(Message msg) {
-		// TODO Auto-generated method stub
 		
 	}
 }
