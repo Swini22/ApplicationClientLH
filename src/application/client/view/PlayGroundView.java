@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import application.client.controller.BombControllerInterface;
 import application.client.controller.PlayerJoinControllerInterface;
+import application.client.controller.PlayerMoveControllerInterface;
 import application.client.model.Player;
 
 public class PlayGroundView {
@@ -36,7 +37,7 @@ public class PlayGroundView {
 		this.labyrinthPanel = labyrinthPanel;
 	}
 
-	public PlayGroundView(PlayerJoinControllerInterface playerJoinControllerInterface, BombControllerInterface bombControllerinterface){
+	public PlayGroundView(PlayerJoinControllerInterface playerJoinControllerInterface, BombControllerInterface bombControllerinterface, PlayerMoveControllerInterface playerMoveController){
 		super();
 		this.playerJoinControllerInterface = playerJoinControllerInterface;
 		this.bombControllerinterface = bombControllerinterface;

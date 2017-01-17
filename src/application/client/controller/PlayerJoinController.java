@@ -19,7 +19,8 @@ public class PlayerJoinController implements MessageReceiverInterface, PlayerJoi
 	public PlayerJoinController() {
 		((MessageHandler) messageHandler).register(this);
 		BombControllerInterface bombController = new BombController();
-		playGroundView = new PlayGroundView(this, bombController);
+		PlayerMoveControllerInterface playerMoveController = new PlayerMoveController();
+		playGroundView = new PlayGroundView(this, bombController, playerMoveController);
 		bombController.setPlayGroundView(playGroundView);
 	}
 	
