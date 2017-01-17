@@ -20,13 +20,14 @@ public class LabyrinthPanel extends JPanel{
 	
 	private LabyrinthPanel labyrinthPanel;
 	private BombControllerInterface bombController;
+	private PlayerMoveControllerInterface playerMoveController;
 	private PlayGroundView playGroundView;
 	private String[][] labyrinthData;
-	private PlayerMoveControllerInterface playerMoveControllerInterface;
 	
-	public LabyrinthPanel(PlayGroundView playGroundView, BombControllerInterface bombController){
+	public LabyrinthPanel(PlayGroundView playGroundView, BombControllerInterface bombController, PlayerMoveControllerInterface playerMoveController){
 		super();
 		this.playGroundView = playGroundView;
+		this.playerMoveController = playerMoveController;
 		this.bombController = bombController;
 		labyrinthPanel = this;
 		initializeGUI();
@@ -59,19 +60,19 @@ public class LabyrinthPanel extends JPanel{
             		 bombController.dropBomb(playGroundView.getLoginField().getText(), 0, 0);
                  }
 				 if(e.getKeyCode()==KeyEvent.VK_UP) {
-					 playerMoveControllerInterface.movePlayer("player","UP");
+					 playerMoveController.movePlayer("player","UP");
 					 setNewPlayerPosition(null);
 				 }
 				 if(e.getKeyCode()==KeyEvent.VK_DOWN) {
-					 playerMoveControllerInterface.movePlayer("player","DOWN");
+					 playerMoveController.movePlayer("player","DOWN");
 					 setNewPlayerPosition(null);
 				 }
 				 if(e.getKeyCode()==KeyEvent.VK_LEFT) {
-					 playerMoveControllerInterface.movePlayer("player","LEFT");
+					 playerMoveController.movePlayer("player","LEFT");
 					 setNewPlayerPosition(null);
 				 }
 				 if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
-					 playerMoveControllerInterface.movePlayer("player","RIGHT");
+					 playerMoveController.movePlayer("player","RIGHT");
 					 setNewPlayerPosition(null);
 				 }
              }

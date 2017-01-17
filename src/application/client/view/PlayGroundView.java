@@ -68,7 +68,7 @@ public class PlayGroundView {
     }
 
 	private void createLabyrinthPanel() {
-		labyrinthPanel = new LabyrinthPanel(this, bombControllerinterface);
+		labyrinthPanel = new LabyrinthPanel(this, bombControllerinterface, playerMoveController);
         
         labyrinthScrollPane = new JScrollPane(labyrinthPanel); 
         labyrinthScrollPane.setBounds(150, 100, 500, 500);
