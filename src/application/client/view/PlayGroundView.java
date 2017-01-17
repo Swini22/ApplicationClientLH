@@ -22,8 +22,9 @@ public class PlayGroundView {
 	private JScrollPane labyrinthScrollPane;
 	private JTextField loginField;
 	private LabyrinthPanel labyrinthPanel;
-	private PlayerJoinControllerInterface playerJoinControllerInterface;
+	private PlayerJoinControllerInterface playerJoinController;
 	private BombControllerInterface bombControllerinterface;
+	private PlayerMoveControllerInterface playerMoveController;
 	
 	public JButton getLoginButton() {
 		return loginButton;
@@ -37,10 +38,11 @@ public class PlayGroundView {
 		this.labyrinthPanel = labyrinthPanel;
 	}
 
-	public PlayGroundView(PlayerJoinControllerInterface playerJoinControllerInterface, BombControllerInterface bombControllerinterface, PlayerMoveControllerInterface playerMoveController){
+	public PlayGroundView(PlayerJoinControllerInterface playerJoinController, BombControllerInterface bombControllerinterface, PlayerMoveControllerInterface playerMoveController){
 		super();
-		this.playerJoinControllerInterface = playerJoinControllerInterface;
+		this.playerJoinController = playerJoinController;
 		this.bombControllerinterface = bombControllerinterface;
+		this.playerMoveController = playerMoveController;
 		initializeGUI();
 	}
 	
@@ -78,7 +80,7 @@ public class PlayGroundView {
 		loginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				playerJoinControllerInterface.joinGame(loginField.getText());
+				playerJoinController.joinGame(loginField.getText());
 			}
 		});  
 		

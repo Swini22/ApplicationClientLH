@@ -11,7 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import application.client.controller.BombControllerInterface;
+import application.client.controller.PlayerMoveControllerInterface;
 import application.client.model.Bomb;
+import application.client.model.Player;
 
 @SuppressWarnings("serial")
 public class LabyrinthPanel extends JPanel{
@@ -20,6 +22,7 @@ public class LabyrinthPanel extends JPanel{
 	private BombControllerInterface bombController;
 	private PlayGroundView playGroundView;
 	private String[][] labyrinthData;
+	private PlayerMoveControllerInterface playerMoveControllerInterface;
 	
 	public LabyrinthPanel(PlayGroundView playGroundView, BombControllerInterface bombController){
 		super();
@@ -54,8 +57,23 @@ public class LabyrinthPanel extends JPanel{
              public void keyPressed(KeyEvent e) {
             	 if(e.getKeyCode()==KeyEvent.VK_SPACE){
             		 bombController.dropBomb(playGroundView.getLoginField().getText(), 0, 0);
-                }
-
+                 }
+				 if(e.getKeyCode()==KeyEvent.VK_UP) {
+					 playerMoveControllerInterface.movePlayer("player","UP");
+					 setNewPlayerPosition(null);
+				 }
+				 if(e.getKeyCode()==KeyEvent.VK_DOWN) {
+					 playerMoveControllerInterface.movePlayer("player","DOWN");
+					 setNewPlayerPosition(null);
+				 }
+				 if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+					 playerMoveControllerInterface.movePlayer("player","LEFT");
+					 setNewPlayerPosition(null);
+				 }
+				 if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+					 playerMoveControllerInterface.movePlayer("player","RIGHT");
+					 setNewPlayerPosition(null);
+				 }
              }
          });
 	}
@@ -103,5 +121,11 @@ public class LabyrinthPanel extends JPanel{
 		labyrinthData[bomb.getPositionX()][bomb.getPositionY()] = "BO";
 		update(labyrinthData);
 		playGroundView.getGameLog().setText(playGroundView.getGameLog().getText()+ "Bomb " +bomb.getId()+" Dropt! \n");
+	}
+
+	public void setNewPlayerPosition(Player player) {
+		//labyrinthData[player.getPositionX()][player.getPositionY()] = "PL";
+		//update(labyrinthData);
+		playGroundView.getGameLog().setText(playGroundView.getGameLog().getText()+ "Player moved \n");
 	}
 }

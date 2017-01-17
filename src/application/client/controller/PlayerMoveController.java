@@ -6,7 +6,7 @@ import application.network.ServerProxyStub;
 
 public class PlayerMoveController implements MessageReceiverInterface, PlayerMoveControllerInterface {
 
-	private MessageHandler messageHandler;
+	private MessageHandler messageHandler = new MessageHandler();
 	private ServerProxy serverProxy = new ServerProxyStub(messageHandler);
 
 	public PlayerMoveController() {
